@@ -1,0 +1,689 @@
+/* Стили для страницы просмотра отдельного поста */
+:root {
+    --primary-color: #ff4500;
+    --secondary-color: #0079d3;
+    --accent-color: #1e88e5;
+    --gradient-start: #ff4500;
+    --gradient-end: #ff8c42;
+    --dark-bg: #1a1a1a;
+    --light-bg: #f0f2f5;
+    --card-bg: #ffffff;
+    --text-color: #1a1a1a;
+    --text-light: #717171;
+    --border-color: #ddd;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --transition-speed: 0.3s;
+}
+
+.post-page {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding-top: 20px;
+}
+
+.post-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.back-button {
+    background-color: var(--light-bg);
+    color: var(--text-color);
+    border: none;
+    border-radius: 30px;
+    padding: 8px 16px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    transition: all var(--transition-speed);
+}
+
+.back-button:hover {
+    background-color: #e8e8e8;
+    text-decoration: none;
+}
+
+.post-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.share-button, .save-button {
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: 30px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all var(--transition-speed);
+}
+
+.share-button:hover, .save-button:hover {
+    background-color: var(--light-bg);
+}
+
+.save-button.saved {
+    color: var(--secondary-color);
+}
+
+.full-post {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.post-header {
+    margin-bottom: 25px;
+}
+
+.post-title {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+    line-height: 1.3;
+    color: var(--text-color);
+}
+
+.post-meta {
+    display: flex;
+    gap: 20px;
+    color: var(--text-light);
+    font-size: 0.95rem;
+}
+
+.post-author, .post-time {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.post-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-color);
+    margin-bottom: 30px;
+}
+
+.post-image {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.post-image img {
+    max-width: 100%;
+    border-radius: 8px;
+    max-height: 500px;
+    object-fit: contain;
+}
+
+.post-stats {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 20px;
+    margin-top: 20px;
+}
+
+.post-votes {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.vote-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: color var(--transition-speed);
+}
+
+.vote-btn.upvote:hover, .vote-btn.upvote.active {
+    color: var(--primary-color);
+}
+
+.vote-btn.downvote:hover, .vote-btn.downvote.active {
+    color: #7193ff;
+}
+
+.vote-count {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.post-reactions {
+    display: flex;
+    gap: 15px;
+}
+
+.like-button {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: color var(--transition-speed);
+}
+
+.like-button:hover, .like-button.active {
+    color: #e74c3c;
+}
+
+.post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.tag {
+    background-color: var(--light-bg);
+    color: var(--text-color);
+    padding: 5px 12px;
+    border-radius: 16px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+}
+
+.tag:hover {
+    background-color: #e8e8e8;
+}
+
+/* Стили для комментариев */
+.comments-container {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.comments-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.comment-form {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.comment-avatar {
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.comment-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.comment-input-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+#comment-input {
+    width: 100%;
+    min-height: 100px;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    resize: vertical;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color var(--transition-speed);
+}
+
+#comment-input:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+}
+
+.comment-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.file-upload-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.file-upload-btn {
+    background-color: var(--light-bg);
+    color: var(--text-color);
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
+    transition: all var(--transition-speed);
+}
+
+.file-upload-btn:hover {
+    background-color: #e8e8e8;
+}
+
+.file-name {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-left: 5px;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.file-warning {
+    color: #e74c3c;
+    font-size: 0.8rem;
+    display: none;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.comment-submit {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all var(--transition-speed);
+}
+
+.comment-submit:hover {
+    background-color: #0062a8;
+    transform: translateY(-2px);
+}
+
+.comments-list {
+    margin-top: 20px;
+}
+
+.comment {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color var(--transition-speed);
+}
+
+.comment:last-child {
+    border-bottom: none;
+}
+
+.comment:hover {
+    background-color: rgba(0, 0, 0, 0.01);
+}
+
+.comment-content {
+    flex: 1;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.comment-author {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.comment-time {
+    color: var(--text-light);
+    font-size: 0.85rem;
+}
+
+.comment-text {
+    line-height: 1.6;
+    color: var(--text-color);
+    margin-bottom: 10px;
+}
+
+.comment-image {
+    margin: 10px 0;
+}
+
+.comment-image img {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 4px;
+    object-fit: contain;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.comment-like, .comment-reply {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: color var(--transition-speed);
+}
+
+.comment-like:hover {
+    color: #e74c3c;
+}
+
+.comment-reply:hover {
+    color: var(--secondary-color);
+}
+
+.no-comments {
+    text-align: center;
+    padding: 30px 0;
+    color: var(--text-light);
+    font-style: italic;
+}
+
+.no-comments i {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    opacity: 0.5;
+}
+
+.comment-notification {
+    text-align: center;
+    padding: 15px;
+    background-color: var(--light-bg);
+    color: var(--text-color);
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.load-more-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.load-more-button {
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-weight: 500;
+    color: var(--text-color);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all var(--transition-speed);
+}
+
+.load-more-button:hover {
+    background-color: var(--light-bg);
+}
+
+/* Стили для модального окна "Поделиться" */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: auto;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: var(--card-bg);
+    margin: 10% auto;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.close-modal {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 24px;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: color var(--transition-speed);
+}
+
+.close-modal:hover {
+    color: var(--text-color);
+}
+
+.modal-content h3 {
+    margin-bottom: 15px;
+    color: var(--text-color);
+}
+
+.modal-content p {
+    margin-bottom: 20px;
+    color: var(--text-light);
+}
+
+.share-url-container {
+    display: flex;
+    margin-bottom: 25px;
+}
+
+#share-url {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px 0 0 4px;
+    font-size: 0.9rem;
+}
+
+.copy-button {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    padding: 10px 15px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background-color var(--transition-speed);
+}
+
+.copy-button:hover {
+    background-color: #0062a8;
+}
+
+.social-share-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.social-share {
+    flex: 1;
+    min-width: 120px;
+    background-color: var(--light-bg);
+    border-radius: 4px;
+    padding: 10px;
+    color: var(--text-color);
+    text-align: center;
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all var(--transition-speed);
+}
+
+.social-share:hover {
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+
+.social-share.twitter {
+    background-color: #1da1f2;
+    color: white;
+}
+
+.social-share.telegram {
+    background-color: #0088cc;
+    color: white;
+}
+
+.social-share.facebook {
+    background-color: #4267B2;
+    color: white;
+}
+
+.social-share.reddit {
+    background-color: #ff4500;
+    color: white;
+}
+
+/* Индикатор загрузки */
+.post-loading {
+    text-align: center;
+    padding: 50px 0;
+}
+
+.spinner {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top-color: var(--secondary-color);
+    animation: spin 1s ease-in-out infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.error-message {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+}
+
+.error-message i {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.error-message a {
+    color: var(--secondary-color);
+    font-weight: 600;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .post-page {
+        padding: 10px;
+    }
+    
+    .full-post {
+        padding: 20px;
+    }
+    
+    .post-title {
+        font-size: 1.8rem;
+    }
+    
+    .post-navigation {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+    
+    .post-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .comment-form {
+        flex-direction: column;
+    }
+    
+    .comment-avatar {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .comment-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .comment-submit {
+        align-self: flex-end;
+    }
+}

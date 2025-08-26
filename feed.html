@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feed | Irys Threads</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="https://unpkg.com/@irys/sdk@latest/dist/index.browser.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js" type="application/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+</head>
+<body>
+    <header class="animate__animated animate__fadeInDown">
+        <div class="header-container">
+            <div class="logo">
+                <h1><a href="index.html">Irys Threads</a></h1>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search...">
+                <button><img src="https://img.icons8.com/ios-glyphs/30/000000/search--v1.png" alt="search"></button>
+            </div>
+            <div class="auth-buttons" id="auth-section">
+                <button id="connect-wallet" class="connect-btn">Connect Wallet</button>
+                <div id="user-info" class="user-info" style="display: none;">
+                    <span id="wallet-address"></span>
+                    <a href="profile.html" class="profile-link">Profile</a>
+                </div>
+            </div>
+        </div>
+        
+        <nav class="main-nav">
+            <ul>
+                <li><a href="feed.html?tab=trending" class="active">Trending</a></li>
+                <li><a href="feed.html?tab=new">New</a></li>
+                <li><a href="feed.html?tab=best">Best</a></li>
+                <li><a href="feed.html?tab=discussions">Discussions</a></li>
+                <li><a href="feed.html?tab=web3">Web3</a></li>
+                <li><a href="feed.html?tab=crypto">Crypto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="content-container">
+        <div class="sidebar animate__animated animate__fadeInLeft">
+            <h3>Categories</h3>
+            <ul>
+                <li><a href="feed.html?tab=trending">Popular</a></li>
+                <li><a href="feed.html?tab=new">New</a></li>
+                <li><a href="feed.html?category=tech">Technology</a></li>
+                <li><a href="feed.html?category=crypto">Cryptocurrencies</a></li>
+                <li><a href="feed.html?category=web3">Web3</a></li>
+                <li><a href="feed.html?category=nft">NFT</a></li>
+                <li><a href="feed.html?category=defi">DeFi</a></li>
+            </ul>
+            
+            <div class="trending-tags">
+                <h3>Trending Tags</h3>
+                <div class="tags-list">
+                    <a href="feed.html?tag=ethereum" class="tag">#ethereum</a>
+                    <a href="feed.html?tag=bitcoin" class="tag">#bitcoin</a>
+                    <a href="feed.html?tag=solana" class="tag">#solana</a>
+                    <a href="feed.html?tag=web3" class="tag">#web3</a>
+                    <a href="feed.html?tag=ai" class="tag">#ai</a>
+                    <a href="feed.html?tag=metaverse" class="tag">#metaverse</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="create-post animate__animated animate__fadeInUp" id="create-post-container">
+                <h3>Create New Thread</h3>
+                <textarea id="post-title" placeholder="Title"></textarea>
+                <textarea id="post-content" placeholder="What do you want to share?"></textarea>
+                <div class="post-options">
+                    <div class="file-upload-wrapper">
+                        <label for="image-upload" class="file-upload-btn">
+                            <i class="fas fa-image"></i> Add Image
+                        </label>
+                        <input type="file" id="image-upload" accept="image/*" style="display: none;">
+                        <span id="file-name" class="file-name"></span>
+                        <span id="file-size-warning" class="file-warning"></span>
+                    </div>
+                    <button id="submit-post" class="btn-primary">
+                        <i class="fas fa-paper-plane"></i> Publish
+                    </button>
+                </div>
+            </div>
+
+            <div id="payment-panel" class="payment-panel" style="display: none;">
+                <h3>Publication Payment</h3>
+                <div class="payment-info">
+                    <div class="payment-detail">
+                        <span class="payment-detail-label">Recipient Address:</span>
+                        <span class="payment-detail-value">0x601F9e84D3B5621131896dF22268B898729a259F</span>
+                    </div>
+                    <div class="payment-detail">
+                        <span class="payment-detail-label">Amount:</span>
+                        <span class="payment-detail-value">0.01 IRYS</span>
+                    </div>
+                    <div class="payment-detail">
+                        <span class="payment-detail-label">Network:</span>
+                        <span class="payment-detail-value">IRYS Testnet (Chain ID: 1270)</span>
+                    </div>
+                </div>
+                <div class="payment-buttons">
+                    <button id="cancel-payment" class="btn-cancel">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                    <button id="confirm-payment" class="btn-pay">
+                        <i class="fas fa-check"></i> Pay
+                    </button>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-content">
+                <h2 id="current-tab-title">Trending</h2>
+                <div class="posts-container" id="posts-container">
+                    <!-- Posts will be loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="animate__animated animate__fadeInUp">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About</h4>
+                <p>Irys Threads - a decentralized platform for discussing topics related to Web3, cryptocurrencies, and new technologies.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="feed.html">Feed</a></li>
+                    <li><a href="feed.html?tab=trending">Trending</a></li>
+                    <li><a href="feed.html?tab=new">New</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2025 Irys Threads. All rights reserved.</p>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+        // Animation on scroll
+        document.addEventListener("DOMContentLoaded", function() {
+            // Function to check file size
+            document.getElementById('image-upload').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const fileName = file.name;
+                    const fileSize = file.size / 1024; // size in KB
+                    const maxSize = 200; // maximum size in KB
+                    
+                    document.getElementById('file-name').textContent = fileName;
+                    
+                    if (fileSize > maxSize) {
+                        document.getElementById('file-size-warning').textContent = 
+                            `File is too large (${Math.round(fileSize)} KB). Maximum size is ${maxSize} KB`;
+                        document.getElementById('file-size-warning').style.display = 'block';
+                    } else {
+                        document.getElementById('file-size-warning').style.display = 'none';
+                    }
+                }
+            });
+            
+            // Process URL parameters for tabs
+            const urlParams = new URLSearchParams(window.location.search);
+            const tab = urlParams.get('tab');
+            const category = urlParams.get('category');
+            const tag = urlParams.get('tag');
+            
+            if (tab) {
+                document.getElementById('current-tab-title').textContent = 
+                    tab === 'trending' ? 'Trending' :
+                    tab === 'new' ? 'New' :
+                    tab === 'best' ? 'Best' :
+                    tab === 'discussions' ? 'Discussions' :
+                    tab === 'web3' ? 'Web3' :
+                    tab === 'crypto' ? 'Crypto' : 'Feed';
+                
+                // Activate corresponding tab in navigation
+                const navLinks = document.querySelectorAll('.main-nav a');
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(tab)) {
+                        link.classList.add('active');
+                    }
+                });
+            } else if (category) {
+                document.getElementById('current-tab-title').textContent = 
+                    category === 'tech' ? 'Technology' :
+                    category === 'crypto' ? 'Cryptocurrencies' :
+                    category === 'web3' ? 'Web3' :
+                    category === 'nft' ? 'NFT' :
+                    category === 'defi' ? 'DeFi' : 'Feed';
+            } else if (tag) {
+                document.getElementById('current-tab-title').textContent = `#${tag}`;
+            }
+            
+            // Process publish button
+            const submitPostButton = document.getElementById('submit-post');
+            if (submitPostButton) {
+                submitPostButton.addEventListener('click', showPaymentPanel);
+            }
+            
+            // Handlers for payment buttons
+            const cancelPaymentButton = document.getElementById('cancel-payment');
+            if (cancelPaymentButton) {
+                cancelPaymentButton.addEventListener('click', hidePaymentPanel);
+            }
+            
+            const confirmPaymentButton = document.getElementById('confirm-payment');
+            if (confirmPaymentButton) {
+                confirmPaymentButton.addEventListener('click', processPayment);
+            }
+        });
+        
+        // Показать панель оплаты
+        function showPaymentPanel() {
+            // Проверка заполнения полей
+            const titleInput = document.getElementById('post-title');
+            const contentInput = document.getElementById('post-content');
+            
+            const title = titleInput.value.trim();
+            const content = contentInput.value.trim();
+            
+            if (!title || !content) {
+                alert('Пожалуйста, заполните заголовок и содержимое поста');
+                return;
+            }
+            
+            // Проверяем, подключен ли кошелек
+            const walletAddress = localStorage.getItem('walletAddress');
+            if (!walletAddress) {
+                alert('Пожалуйста, подключите кошелек для публикации');
+                return;
+            }
+            
+            // Показываем панель оплаты
+            document.getElementById('payment-panel').style.display = 'block';
+            document.getElementById('create-post-container').style.display = 'none';
+        }
+        
+        // Скрыть панель оплаты
+        function hidePaymentPanel() {
+            document.getElementById('payment-panel').style.display = 'none';
+            document.getElementById('create-post-container').style.display = 'block';
+        }
+        
+        // Обработка оплаты
+        async function processPayment() {
+            try {
+                // Получаем данные для поста
+                const titleInput = document.getElementById('post-title');
+                const contentInput = document.getElementById('post-content');
+                const imageInput = document.getElementById('image-upload');
+                
+                const title = titleInput.value.trim();
+                const content = contentInput.value.trim();
+                
+                // Проверка подключения кошелька
+                const { provider, name } = await detectProvider();
+                if (!provider) {
+                    alert('Не удалось подключиться к кошельку');
+                    return;
+                }
+                
+                // Получение адреса кошелька
+                const accounts = await provider.request({ method: 'eth_requestAccounts' });
+                const walletAddress = accounts[0];
+                
+                // Настраиваем параметры для отправки транзакции
+                const receiverAddress = '0x601F9e84D3B5621131896dF22268B898729a259F';
+                const amount = ethers.utils.parseUnits('0.01', 18); // 0.01 IRYS с 18 десятичными знаками
+                
+                // Проверка баланса
+                const signer = new ethers.providers.Web3Provider(provider).getSigner();
+                const balance = await signer.getBalance();
+                
+                if (balance.lt(amount)) {
+                    alert('Недостаточно средств для оплаты публикации');
+                    return;
+                }
+                
+                // Создаем транзакцию
+                const tx = {
+                    to: receiverAddress,
+                    value: amount,
+                    chainId: 1270 // Chain ID сети IRYS
+                };
+                
+                // Отправляем транзакцию
+                try {
+                    document.getElementById('confirm-payment').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Оплата...';
+                    document.getElementById('confirm-payment').disabled = true;
+                    document.getElementById('cancel-payment').disabled = true;
+                    
+                    // Отправляем транзакцию через кошелек пользователя
+                    const txHash = await signer.sendTransaction(tx);
+                    console.log('Транзакция отправлена:', txHash);
+                    
+                    // Ждем подтверждения транзакции
+                    const receipt = await txHash.wait();
+                    console.log('Транзакция подтверждена:', receipt);
+                    
+                    // Обрабатываем изображение, если оно есть
+                    let imageData = null;
+                    if (imageInput.files && imageInput.files[0]) {
+                        const file = imageInput.files[0];
+                        const fileSize = file.size / 1024; // размер в KB
+                        const maxSize = 200; // максимальный размер в KB
+                        
+                        if (fileSize > maxSize) {
+                            alert(`Файл слишком большой (${Math.round(fileSize)} KB). Максимальный размер - ${maxSize} KB`);
+                            hidePaymentPanel();
+                            return;
+                        }
+                        
+                        // Читаем изображение как base64
+                        imageData = await readFileAsDataURL(file);
+                    }
+                    
+                    // Сохраняем пост
+                    const postId = Date.now().toString();
+                    const post = {
+                        id: postId,
+                        title: title,
+                        content: content,
+                        author: walletAddress,
+                        createdAt: new Date().toISOString(),
+                        votes: 0,
+                        likes: [],
+                        comments: [],
+                        image: imageData,
+                        txHash: txHash.hash
+                    };
+                    
+                    // Сохраняем в Irys и/или localStorage
+                    const irysId = await saveToIrys(post, [
+                        { name: 'Content-Type', value: 'application/json' },
+                        { name: 'Data-Type', value: 'post' },
+                        { name: 'Post-Title', value: title },
+                        { name: 'Author', value: walletAddress },
+                        { name: 'Transaction-Hash', value: txHash.hash }
+                    ]);
+                    
+                    // Если сохранение в Irys удалось, добавляем ссылку на Irys
+                    if (irysId) {
+                        post.irysId = irysId;
+                    }
+                    
+                    // Сохраняем в localStorage
+                    const existingPostsString = localStorage.getItem('posts');
+                    const existingPosts = existingPostsString ? JSON.parse(existingPostsString) : [];
+                    existingPosts.unshift(post);
+                    localStorage.setItem('posts', JSON.stringify(existingPosts));
+                    
+                    // Очищаем форму и скрываем панель оплаты
+                    titleInput.value = '';
+                    contentInput.value = '';
+                    imageInput.value = '';
+                    document.getElementById('file-name').textContent = '';
+                    document.getElementById('file-size-warning').style.display = 'none';
+                    
+                    hidePaymentPanel();
+                    
+                    // Обновляем отображение постов
+                    loadPosts();
+                    
+                    alert('Пост успешно опубликован!');
+                } catch (error) {
+                    console.error('Ошибка при отправке транзакции:', error);
+                    alert('Произошла ошибка при отправке транзакции: ' + (error.message || error));
+                } finally {
+                    document.getElementById('confirm-payment').innerHTML = '<i class="fas fa-check"></i> Оплатить';
+                    document.getElementById('confirm-payment').disabled = false;
+                    document.getElementById('cancel-payment').disabled = false;
+                }
+            } catch (error) {
+                console.error('Ошибка при обработке оплаты:', error);
+                alert('Произошла ошибка при обработке оплаты: ' + (error.message || error));
+                document.getElementById('confirm-payment').innerHTML = '<i class="fas fa-check"></i> Оплатить';
+                document.getElementById('confirm-payment').disabled = false;
+                document.getElementById('cancel-payment').disabled = false;
+            }
+        }
+        
+        // Чтение файла в формате base64
+        function readFileAsDataURL(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+    </script>
+</body>
+</html>

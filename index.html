@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irys Threads - Decentralized Discussion Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="landing.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="https://unpkg.com/@irys/sdk@latest/dist/index.browser.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js" type="application/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+</head>
+<body class="landing-page">
+    <header class="landing-header animate__animated animate__fadeIn">
+        <div class="header-container">
+            <div class="logo">
+                <h1>Irys Threads</h1>
+            </div>
+            <nav class="landing-nav">
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#trending">Trending</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button id="connect-wallet-landing" class="connect-btn">Connect Wallet</button>
+                <a href="feed.html" class="cta-button">Go to Feed</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero animate__animated animate__fadeIn">
+        <div class="hero-content">
+            <h1>Welcome to Irys Threads</h1>
+            <h2>Decentralized Discussions for the Web3 World</h2>
+            <p>Join the fastest growing platform for discussions about cryptocurrencies, NFTs, DeFi, and future technologies</p>
+            <div class="hero-buttons">
+                <a href="feed.html" class="btn-primary">Explore</a>
+                <button id="connect-wallet-hero" class="btn-secondary">Connect Wallet</button>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMjAyMDIwIi8+CiAgPGNpcmNsZSBjeD0iMjAwIiBjeT0iMjAwIiByPSIxNTAiIGZpbGw9IiMzMDMwMzAiLz4KICA8Y2lyY2xlIGN4PSIyMDAiIGN5PSIyMDAiIHI9IjEwMCIgZmlsbD0iIzQwNDA0MCIvPgogIDxjaXJjbGUgY3g9IjIwMCIgY3k9IjIwMCIgcj0iNTAiIGZpbGw9IiNGRjQ1MDAiLz4KICA8dGV4dCB4PSIyMDAiIHk9IjIwMCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjI0IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9IjEwIj5JcnlzIFRocmVhZHM8L3RleHQ+Cjwvc3ZnPg==" alt="Irys Threads Hero" class="floating-animation">
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="section-header">
+            <h2>Platform Features</h2>
+            <p>Discover the benefits of decentralized communication</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3>Decentralization</h3>
+                <p>Full control over your data thanks to Irys technology</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-wallet"></i>
+                </div>
+                <h3>Web3 Authentication</h3>
+                <p>Use your crypto wallet instead of login and password</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <h3>Discussions</h3>
+                <p>Discuss interesting topics with like-minded people</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Trending</h3>
+                <p>Follow the most popular topics in the community</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="how-it-works" class="how-it-works">
+        <div class="section-header">
+            <h2>How It Works</h2>
+            <p>Four simple steps to get started</p>
+        </div>
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Connect Your Wallet</h3>
+                    <p>Use Rabby or another Web3 wallet for quick authentication</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Create Your Profile</h3>
+                    <p>Add a name and avatar to personalize your account</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Join Discussions</h3>
+                    <p>Browse, comment, and like posts</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Create Your Content</h3>
+                    <p>Share your thoughts with the community through posts</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="trending" class="trending-section">
+        <div class="section-header">
+            <h2>Popular Discussions</h2>
+            <p>Join the hottest topics right now</p>
+        </div>
+        <div class="trending-posts" id="trending-posts">
+            <!-- Trending posts will be displayed here -->
+        </div>
+        <div class="view-more-container">
+            <a href="feed.html?tab=trending" class="btn-secondary">Show more</a>
+        </div>
+    </section>
+
+    <section id="about" class="about-section">
+        <div class="about-content">
+            <h2>About Irys Threads</h2>
+            <p>Irys Threads is a decentralized platform for communication and exchange of ideas in the world of Web3 and blockchain technologies. We've created a secure space where users can discuss technology, cryptocurrencies, NFTs, DeFi, and much more.</p>
+            <p>Our mission is to connect people passionate about future technologies and create an ecosystem for knowledge and experience sharing. Thanks to decentralized data storage through Irys, we guarantee the security and longevity of your content.</p>
+        </div>
+        <div class="about-stats">
+            <div class="stat-item">
+                <h3>1,500+</h3>
+                <p>Active users</p>
+            </div>
+            <div class="stat-item">
+                <h3>10,000+</h3>
+                <p>Created posts</p>
+            </div>
+            <div class="stat-item">
+                <h3>50,000+</h3>
+                <p>Comments</p>
+            </div>
+            <div class="stat-item">
+                <h3>100%</h3>
+                <p>Decentralization</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Ready to join?</h2>
+            <p>Start discussing and sharing your thoughts with the community today</p>
+            <div class="cta-buttons">
+                <a href="feed.html" class="btn-primary">Explore Feed</a>
+                <button id="connect-wallet-cta" class="btn-secondary">Connect Wallet</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About</h4>
+                <p>Irys Threads - a decentralized platform for discussing topics related to Web3, cryptocurrencies, and new technologies.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="feed.html">Feed</a></li>
+                    <li><a href="feed.html?tab=trending">Trending</a></li>
+                    <li><a href="feed.html?tab=new">New</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2025 Irys Threads. All rights reserved.</p>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Loading trending posts
+            const trendingPostsContainer = document.getElementById('trending-posts');
+            if (trendingPostsContainer) {
+                // Here will be code for loading trending posts
+                await loadTrendingPosts();
+            }
+            
+            // Handlers for wallet connection buttons
+            const connectButtons = [
+                document.getElementById('connect-wallet-landing'),
+                document.getElementById('connect-wallet-hero'),
+                document.getElementById('connect-wallet-cta')
+            ];
+            
+            connectButtons.forEach(button => {
+                if (button) {
+                    button.addEventListener('click', connectWallet);
+                }
+            });
+            
+            // Register ScrollTrigger plugin
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
+                
+                // GSAP animations
+                gsap.from(".feature-card", {
+                    duration: 0.8,
+                    opacity: 0,
+                    y: 50,
+                    stagger: 0.2,
+                    scrollTrigger: {
+                        trigger: ".features-grid",
+                        start: "top 80%"
+                    }
+                });
+                
+                gsap.from(".step", {
+                    duration: 0.8,
+                    opacity: 0,
+                    x: -50,
+                    stagger: 0.2,
+                    scrollTrigger: {
+                        trigger: ".steps-container",
+                        start: "top 80%"
+                    }
+                });
+            } else {
+                console.log('GSAP или ScrollTrigger не загружены');
+            }
+        });
+        
+        // Загрузка трендовых постов
+        async function loadTrendingPosts() {
+            const container = document.getElementById('trending-posts');
+            if (!container) return;
+            
+            try {
+                // In a real application, there would be an API request or Irys query here
+                // For demonstration, we use mock data
+                const mockPosts = [
+                    {
+                        id: '1',
+                        title: 'The Future of Web3: What Awaits Us in 2026',
+                        excerpt: 'Discussion of the main trends and technologies that will shape the Web3 space in the coming year...',
+                        author: '0xaBc1...23dE',
+                        likes: 145,
+                        comments: 32,
+                        timestamp: new Date(Date.now() - 3600000 * 2).toISOString()
+                    },
+                    {
+                        id: '2',
+                        title: 'Using Irys for NFT Metadata Storage',
+                        excerpt: 'A practical guide to using Irys for reliable and decentralized storage of NFT metadata...',
+                        author: '0x7890...45fG',
+                        likes: 98,
+                        comments: 17,
+                        timestamp: new Date(Date.now() - 3600000 * 5).toISOString()
+                    },
+                    {
+                        id: '3',
+                        title: 'Comparison of Popular Wallets for Web3 Developers',
+                        excerpt: 'Detailed analysis of the advantages and disadvantages of Rabby, MetaMask and other popular solutions...',
+                        author: '0xDef5...67Hi',
+                        likes: 76,
+                        comments: 24,
+                        timestamp: new Date(Date.now() - 3600000 * 8).toISOString()
+                    }
+                ];
+                
+                // Render trending post cards
+                container.innerHTML = mockPosts.map(post => `
+                    <div class="trending-card animate__animated animate__fadeIn">
+                        <h3 class="trending-title">
+                            <a href="post.html?id=${post.id}">${post.title}</a>
+                        </h3>
+                        <p class="trending-excerpt">${post.excerpt}</p>
+                        <div class="trending-meta">
+                            <span class="trending-author">Author: ${post.author}</span>
+                            <span class="trending-stats">
+                                <i class="fas fa-heart"></i> ${post.likes}
+                                <i class="fas fa-comment ml-2"></i> ${post.comments}
+                            </span>
+                            <a href="post.html?id=${post.id}" class="read-more-btn">Read more</a>
+                        </div>
+                    </div>
+                `).join('');
+                
+            } catch (error) {
+                console.error('Error loading trending posts:', error);
+                container.innerHTML = '<p class="error-message">Failed to load trending posts</p>';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Post | Irys Threads</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="post.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="https://unpkg.com/@irys/sdk@latest/dist/index.browser.js"></script>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+</head>
+<body>
+    <header class="animate__animated animate__fadeInDown">
+        <div class="header-container">
+            <div class="logo">
+                <h1><a href="index.html">Irys Threads</a></h1>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search...">
+                <button><img src="https://img.icons8.com/ios-glyphs/30/000000/search--v1.png" alt="search"></button>
+            </div>
+            <div class="auth-buttons" id="auth-section">
+                <button id="connect-wallet" class="connect-btn">Connect Wallet</button>
+                <div id="user-info" class="user-info" style="display: none;">
+                    <span id="wallet-address"></span>
+                    <a href="profile.html" class="profile-link">Profile</a>
+                </div>
+            </div>
+        </div>
+        
+        <nav class="main-nav">
+            <ul>
+                <li><a href="feed.html?tab=trending">Trending</a></li>
+                <li><a href="feed.html?tab=new">New</a></li>
+                <li><a href="feed.html?tab=best">Best</a></li>
+                <li><a href="feed.html?tab=discussions">Discussions</a></li>
+                <li><a href="feed.html?tab=web3">Web3</a></li>
+                <li><a href="feed.html?tab=crypto">Crypto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="content-container post-page">
+        <div class="post-navigation">
+            <a href="javascript:history.back()" class="back-button">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+            <div class="post-actions">
+                <button class="share-button" id="share-post">
+                    <i class="fas fa-share-alt"></i> Share
+                </button>
+                <button class="save-button" id="save-post">
+                    <i class="far fa-bookmark"></i> Save
+                </button>
+            </div>
+        </div>
+
+        <article class="full-post animate__animated animate__fadeIn" id="full-post">
+            <!-- Post content will be loaded dynamically -->
+            <div class="post-loading">
+                <div class="spinner"></div>
+                <p>Loading post...</p>
+            </div>
+        </article>
+
+        <div class="comments-container" id="comments-container">
+            <h3 class="comments-title">
+                <i class="fas fa-comments"></i> Comments (<span id="comments-count">0</span>)
+            </h3>
+            
+            <div class="comment-form">
+                <div class="comment-avatar">
+                    <img id="user-avatar" src="https://img.icons8.com/fluent/96/000000/user-male-circle.png" alt="User Avatar">
+                </div>
+                <div class="comment-input-container">
+                    <textarea id="comment-input" placeholder="Write a comment..."></textarea>
+                    <div class="comment-options">
+                        <div class="file-upload-wrapper">
+                            <label for="comment-image" class="file-upload-btn">
+                                <i class="fas fa-image"></i> Image
+                            </label>
+                            <input type="file" id="comment-image" accept="image/*" style="display: none;">
+                            <span id="comment-file-name" class="file-name"></span>
+                            <span id="comment-file-size-warning" class="file-warning"></span>
+                        </div>
+                        <button id="send-comment" class="comment-submit">
+                            <i class="fas fa-paper-plane"></i> Send
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="comments-list" id="comments-list">
+                <!-- Comments will be loaded dynamically -->
+            </div>
+            
+            <div class="load-more-container" id="load-more-container" style="display: none;">
+                <button id="load-more-comments" class="load-more-button">
+                    <i class="fas fa-sync"></i> Load More Comments
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="share-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Share Post</h3>
+            <p>Copy the link or share on social media:</p>
+            <div class="share-url-container">
+                <input type="text" id="share-url" readonly>
+                <button id="copy-url" class="copy-button">
+                    <i class="fas fa-copy"></i> Copy
+                </button>
+            </div>
+            <div class="social-share-buttons">
+                <a href="#" class="social-share twitter">
+                    <i class="fab fa-twitter"></i> Twitter
+                </a>
+                <a href="#" class="social-share telegram">
+                    <i class="fab fa-telegram"></i> Telegram
+                </a>
+                <a href="#" class="social-share facebook">
+                    <i class="fab fa-facebook"></i> Facebook
+                </a>
+                <a href="#" class="social-share reddit">
+                    <i class="fab fa-reddit"></i> Reddit
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About</h4>
+                <p>Irys Threads - a decentralized platform for discussing topics related to Web3, cryptocurrencies, and new technologies.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="feed.html">Feed</a></li>
+                    <li><a href="feed.html?tab=trending">Trending</a></li>
+                    <li><a href="feed.html?tab=new">New</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2025 Irys Threads. All rights reserved.</p>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Get post ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const postId = urlParams.get('id');
+            
+            if (postId) {
+                // Load post
+                await loadPostDetails(postId);
+                // Load comments
+                await loadComments(postId);
+            } else {
+                // If post ID is not specified, show error message
+                document.getElementById('full-post').innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>Post not found. Please check the URL or return to the <a href="feed.html">main page</a>.</p>
+                    </div>
+                `;
+            }
+            
+            // Handler for comment submit button
+            document.getElementById('send-comment').addEventListener('click', () => {
+                submitComment(postId);
+            });
+            
+            // Handler for share button
+            document.getElementById('share-post').addEventListener('click', () => {
+                showShareModal(postId);
+            });
+            
+            // Handler for modal close
+            document.querySelector('.close-modal').addEventListener('click', () => {
+                document.getElementById('share-modal').style.display = 'none';
+            });
+            
+            // Handler for URL copy
+            document.getElementById('copy-url').addEventListener('click', () => {
+                const shareUrlInput = document.getElementById('share-url');
+                shareUrlInput.select();
+                document.execCommand('copy');
+                
+                // Change button text for feedback
+                const copyButton = document.getElementById('copy-url');
+                copyButton.innerHTML = '<i class="fas fa-check"></i> Copied';
+                setTimeout(() => {
+                    copyButton.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                }, 2000);
+            });
+            
+            // Handler for save button
+            document.getElementById('save-post').addEventListener('click', (e) => {
+                const button = e.currentTarget;
+                const isSaved = button.classList.contains('saved');
+                
+                if (isSaved) {
+                    button.innerHTML = '<i class="far fa-bookmark"></i> Save';
+                    button.classList.remove('saved');
+                } else {
+                    button.innerHTML = '<i class="fas fa-bookmark"></i> Saved';
+                    button.classList.add('saved');
+                }
+                
+                // In a real application, there would be code here to save the post
+                savePost(postId, !isSaved);
+            });
+            
+            // Handler for load more comments button
+            document.getElementById('load-more-comments').addEventListener('click', () => {
+                loadMoreComments(postId);
+            });
+            
+            // Handler for checking image file size in comments
+            document.getElementById('comment-image').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const fileName = file.name;
+                    const fileSize = file.size / 1024; // size in KB
+                    const maxSize = 200; // maximum size in KB
+                    
+                    document.getElementById('comment-file-name').textContent = fileName;
+                    
+                    if (fileSize > maxSize) {
+                        document.getElementById('comment-file-size-warning').textContent = 
+                            `File is too large (${Math.round(fileSize)} KB). Maximum size is ${maxSize} KB`;
+                        document.getElementById('comment-file-size-warning').style.display = 'block';
+                    } else {
+                        document.getElementById('comment-file-size-warning').style.display = 'none';
+                    }
+                }
+            });
+            
+            // Close modal when clicking outside of it
+            window.onclick = function(event) {
+                const modal = document.getElementById('share-modal');
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            }
+        });
+        
+        // Function to load post details
+        async function loadPostDetails(postId) {
+            const postContainer = document.getElementById('full-post');
+            
+            try {
+                // In a real application, there would be an API request or Irys query here
+                // For demonstration, we use mock data or localStorage
+                const postsString = localStorage.getItem('posts');
+                const posts = postsString ? JSON.parse(postsString) : [];
+                
+                // Находим нужный пост
+                const post = posts.find(p => p.id === postId);
+                
+                if (post) {
+                    const timeAgo = formatTimeAgo(new Date(post.createdAt));
+                    
+                    // Рендерим содержимое поста
+                    postContainer.innerHTML = `
+                        <header class="post-header">
+                            <h1 class="post-title">${post.title}</h1>
+                            <div class="post-meta">
+                                <span class="post-author">
+                                    <i class="fas fa-user-circle"></i> ${formatAddress(post.author)}
+                                </span>
+                                <span class="post-time">
+                                    <i class="far fa-clock"></i> ${timeAgo}
+                                </span>
+                            </div>
+                        </header>
+                        
+                        <div class="post-content">
+                            ${post.content}
+                            
+                            ${post.image ? `
+                                <div class="post-image">
+                                    <img src="${post.image}" alt="Изображение к посту">
+                                </div>
+                            ` : ''}
+                        </div>
+                        
+                        <div class="post-stats">
+                            <div class="post-votes">
+                                <button class="vote-btn upvote" data-post-id="${post.id}">
+                                    <i class="fas fa-chevron-up"></i>
+                                </button>
+                                <span class="vote-count">${post.votes}</span>
+                                <button class="vote-btn downvote" data-post-id="${post.id}">
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="post-reactions">
+                                <button class="like-button" data-post-id="${post.id}">
+                                    <i class="far fa-heart"></i>
+                                    <span class="like-count">${post.likes ? post.likes.length : 0}</span> Нравится
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="post-tags">
+                            <span class="tag">#web3</span>
+                            <span class="tag">#crypto</span>
+                            <span class="tag">#blockchain</span>
+                        </div>
+                    `;
+                    
+                    // Добавляем обработчики событий для кнопок голосования
+                    const upvoteBtn = postContainer.querySelector('.upvote');
+                    const downvoteBtn = postContainer.querySelector('.downvote');
+                    
+                    if (upvoteBtn && downvoteBtn) {
+                        upvoteBtn.addEventListener('click', () => votePost(postId, 1));
+                        downvoteBtn.addEventListener('click', () => votePost(postId, -1));
+                    }
+                    
+                    // Добавляем обработчик для кнопки лайка
+                    const likeButton = postContainer.querySelector('.like-button');
+                    if (likeButton) {
+                        likeButton.addEventListener('click', (e) => {
+                            toggleLike(postId, e.currentTarget);
+                        });
+                    }
+                    
+                    // Обновляем заголовок страницы
+                    document.title = `${post.title} | Irys Threads`;
+                    
+                    // Обновляем счетчик комментариев
+                    const commentCount = post.comments ? post.comments.length : 0;
+                    document.getElementById('comments-count').textContent = commentCount;
+                } else {
+                    postContainer.innerHTML = `
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p>Пост не найден. Пожалуйста, проверьте URL или вернитесь на <a href="feed.html">главную страницу</a>.</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Ошибка при загрузке поста:', error);
+                postContainer.innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>Произошла ошибка при загрузке поста. Пожалуйста, попробуйте позже или вернитесь на <a href="feed.html">главную страницу</a>.</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Функция для загрузки комментариев
+        async function loadComments(postId) {
+            const commentsList = document.getElementById('comments-list');
+            
+            try {
+                // В реальном приложении здесь был бы запрос к API или Irys
+                // Для демонстрации используем моковые данные или localStorage
+                const postsString = localStorage.getItem('posts');
+                const posts = postsString ? JSON.parse(postsString) : [];
+                
+                // Находим нужный пост
+                const post = posts.find(p => p.id === postId);
+                
+                if (post && post.comments && post.comments.length > 0) {
+                    // Рендерим комментарии
+                    const commentsHTML = post.comments.map(comment => {
+                        const timeAgo = formatTimeAgo(new Date(comment.createdAt));
+                        
+                        return `
+                            <div class="comment">
+                                <div class="comment-avatar">
+                                    <img src="https://img.icons8.com/fluent/96/000000/user-male-circle.png" alt="Аватар пользователя">
+                                </div>
+                                <div class="comment-content">
+                                    <div class="comment-header">
+                                        <span class="comment-author">${formatAddress(comment.author)}</span>
+                                        <span class="comment-time">${timeAgo}</span>
+                                    </div>
+                                    <div class="comment-text">
+                                        ${comment.text}
+                                        
+                                        ${comment.image ? `
+                                            <div class="comment-image">
+                                                <img src="${comment.image}" alt="Изображение к комментарию">
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                    <div class="comment-actions">
+                                        <button class="comment-like">
+                                            <i class="far fa-heart"></i> Нравится
+                                        </button>
+                                        <button class="comment-reply">
+                                            <i class="fas fa-reply"></i> Ответить
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                    
+                    commentsList.innerHTML = commentsHTML;
+                    
+                    // Если комментариев больше 5, показываем кнопку "Загрузить еще"
+                    if (post.comments.length > 5) {
+                        document.getElementById('load-more-container').style.display = 'block';
+                    }
+                } else {
+                    // Если комментариев нет, показываем сообщение
+                    commentsList.innerHTML = `
+                        <div class="no-comments">
+                            <i class="far fa-comment-alt"></i>
+                            <p>Пока нет комментариев. Будьте первым, кто оставит комментарий!</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Ошибка при загрузке комментариев:', error);
+                commentsList.innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>Произошла ошибка при загрузке комментариев. Пожалуйста, попробуйте позже.</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Функция для отправки комментария
+        async function submitComment(postId) {
+            const commentInput = document.getElementById('comment-input');
+            const commentText = commentInput.value.trim();
+            
+            if (!commentText) {
+                alert('Пожалуйста, введите текст комментария');
+                return;
+            }
+            
+            const walletAddress = localStorage.getItem('walletAddress');
+            if (!walletAddress) {
+                alert('Пожалуйста, подключите кошелек для комментирования');
+                return;
+            }
+            
+            try {
+                // Получаем выбранный файл изображения, если есть
+                const imageInput = document.getElementById('comment-image');
+                let imageData = null;
+                
+                if (imageInput.files && imageInput.files[0]) {
+                    const file = imageInput.files[0];
+                    const fileSize = file.size / 1024; // размер в KB
+                    const maxSize = 200; // максимальный размер в KB
+                    
+                    if (fileSize > maxSize) {
+                        alert(`Файл слишком большой (${Math.round(fileSize)} KB). Максимальный размер - ${maxSize} KB`);
+                        return;
+                    }
+                    
+                    // Чтение файла в base64
+                    imageData = await readFileAsDataURL(file);
+                }
+                
+                // Создаем новый комментарий
+                const newComment = {
+                    id: Date.now().toString(),
+                    postId: postId,
+                    author: walletAddress,
+                    text: commentText,
+                    createdAt: new Date().toISOString(),
+                    image: imageData
+                };
+                
+                // В реальном приложении здесь был бы запрос к API или Irys
+                // Для демонстрации используем localStorage
+                const postsString = localStorage.getItem('posts');
+                const posts = postsString ? JSON.parse(postsString) : [];
+                
+                // Находим нужный пост
+                const postIndex = posts.findIndex(p => p.id === postId);
+                
+                if (postIndex !== -1) {
+                    // Добавляем комментарий к посту
+                    if (!posts[postIndex].comments) {
+                        posts[postIndex].comments = [];
+                    }
+                    
+                    posts[postIndex].comments.push(newComment);
+                    
+                    // Сохраняем обновленные данные
+                    localStorage.setItem('posts', JSON.stringify(posts));
+                    
+                    // Обновляем отображение комментариев
+                    await loadComments(postId);
+                    
+                    // Очищаем поле ввода и сбрасываем выбранный файл
+                    commentInput.value = '';
+                    imageInput.value = '';
+                    document.getElementById('comment-file-name').textContent = '';
+                    document.getElementById('comment-file-size-warning').style.display = 'none';
+                    
+                    // Обновляем счетчик комментариев
+                    const commentCount = posts[postIndex].comments.length;
+                    document.getElementById('comments-count').textContent = commentCount;
+                }
+            } catch (error) {
+                console.error('Ошибка при отправке комментария:', error);
+                alert('Произошла ошибка при отправке комментария. Пожалуйста, попробуйте позже.');
+            }
+        }
+        
+        // Функция для чтения файла в формате base64
+        function readFileAsDataURL(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+        
+        // Функция для отображения модального окна "Поделиться"
+        function showShareModal(postId) {
+            const modal = document.getElementById('share-modal');
+            const shareUrl = `${window.location.origin}/post.html?id=${postId}`;
+            const shareUrlInput = document.getElementById('share-url');
+            
+            shareUrlInput.value = shareUrl;
+            modal.style.display = 'block';
+            
+            // Настраиваем URL для кнопок социальных сетей
+            const title = encodeURIComponent(document.title);
+            const url = encodeURIComponent(shareUrl);
+            
+            document.querySelector('.social-share.twitter').href = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
+            document.querySelector('.social-share.telegram').href = `https://t.me/share/url?url=${url}&text=${title}`;
+            document.querySelector('.social-share.facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+            document.querySelector('.social-share.reddit').href = `https://www.reddit.com/submit?url=${url}&title=${title}`;
+        }
+        
+        // Функция для сохранения поста
+        function savePost(postId, isSave) {
+            const walletAddress = localStorage.getItem('walletAddress');
+            if (!walletAddress) {
+                alert('Пожалуйста, подключите кошелек для сохранения поста');
+                return;
+            }
+            
+            // В реальном приложении здесь был бы запрос к API или Irys
+            // Для демонстрации используем localStorage
+            const savedPostsKey = `saved_posts_${walletAddress}`;
+            let savedPosts = localStorage.getItem(savedPostsKey);
+            savedPosts = savedPosts ? JSON.parse(savedPosts) : [];
+            
+            if (isSave) {
+                // Добавляем пост в сохраненные, если его еще нет
+                if (!savedPosts.includes(postId)) {
+                    savedPosts.push(postId);
+                }
+            } else {
+                // Удаляем пост из сохраненных
+                const index = savedPosts.indexOf(postId);
+                if (index !== -1) {
+                    savedPosts.splice(index, 1);
+                }
+            }
+            
+            localStorage.setItem(savedPostsKey, JSON.stringify(savedPosts));
+        }
+        
+        // Функция для загрузки дополнительных комментариев
+        function loadMoreComments(postId) {
+            // В реальном приложении здесь был бы запрос к API для загрузки дополнительных комментариев
+            // Для демонстрации просто скрываем кнопку "Загрузить еще"
+            document.getElementById('load-more-container').style.display = 'none';
+            
+            // Показываем уведомление
+            const commentsList = document.getElementById('comments-list');
+            commentsList.innerHTML += `
+                <div class="comment-notification">
+                    <p>Все комментарии загружены</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

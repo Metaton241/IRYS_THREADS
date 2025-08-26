@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | Irys Threads</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="https://unpkg.com/@irys/sdk@latest/dist/index.browser.js"></script>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+    <header class="animate__animated animate__fadeInDown">
+        <div class="header-container">
+            <div class="logo">
+                <h1><a href="index.html">Irys Threads</a></h1>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search...">
+                <button><img src="https://img.icons8.com/ios-glyphs/30/000000/search--v1.png" alt="search"></button>
+            </div>
+            <div class="auth-buttons" id="auth-section">
+                <button id="connect-wallet" class="connect-btn">Connect Wallet</button>
+                <div id="user-info" class="user-info" style="display: none;">
+                    <span id="wallet-address"></span>
+                    <a href="profile.html" class="profile-link">Profile</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="content-container">
+        <div class="profile-container animate__animated animate__fadeIn">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <img id="profile-image" src="https://img.icons8.com/fluent/96/000000/user-male-circle.png" alt="Profile Avatar">
+                </div>
+                <div class="profile-info">
+                    <h2 id="profile-wallet-address">Wallet Address</h2>
+                    <p id="profile-joined">Member since: <span id="join-date">June 2025</span></p>
+                </div>
+            </div>
+
+            <div class="profile-tabs">
+                <button class="tab-btn active" data-tab="posts">My Posts</button>
+                <button class="tab-btn" data-tab="comments">My Comments</button>
+                <button class="tab-btn" data-tab="saved">Saved</button>
+                <button class="tab-btn" data-tab="settings">Settings</button>
+            </div>
+
+            <div class="tab-content" id="posts-tab">
+                <h3>My Posts</h3>
+                <div class="posts-container" id="user-posts">
+                    <!-- User posts will be loaded dynamically -->
+                    <p class="empty-state">You don't have any posts yet.</p>
+                </div>
+            </div>
+
+            <div class="tab-content" id="comments-tab" style="display: none;">
+                <h3>My Comments</h3>
+                <div class="comments-container" id="user-comments">
+                    <!-- User comments will be loaded dynamically -->
+                    <p class="empty-state">You don't have any comments yet.</p>
+                </div>
+            </div>
+
+            <div class="tab-content" id="saved-tab" style="display: none;">
+                <h3>Saved</h3>
+                <div class="saved-container" id="user-saved">
+                    <!-- Saved posts will be loaded dynamically -->
+                    <p class="empty-state">You don't have any saved posts yet.</p>
+                </div>
+            </div>
+
+            <div class="tab-content" id="settings-tab" style="display: none;">
+                <h3>Profile Settings</h3>
+                <div class="settings-form">
+                    <div class="form-group">
+                        <label for="display-name">Display Name</label>
+                        <input type="text" id="display-name" placeholder="Enter your display name">
+                    </div>
+                    <div class="form-group">
+                        <label for="profile-bio">About Me</label>
+                        <textarea id="profile-bio" placeholder="Tell us a bit about yourself"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="profile-avatar">Profile Avatar</label>
+                        <input type="file" id="profile-avatar" accept="image/*">
+                    </div>
+                    <button id="save-profile" class="save-btn">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="animate__animated animate__fadeInUp">
+        <p>&copy; 2025 Irys Threads. All rights reserved.</p>
+    </footer>
+
+    <script src="app.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>
